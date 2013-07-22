@@ -19,9 +19,24 @@ Pod::Spec.new do |s|
   s.dependency 'KIF', '>= 0.0.1'
   
   # Add Core Data to the PCH (This should be optional, but there's no good way to configure this with CocoaPods at the moment)
-#   s.prefix_header_contents = <<-EOS
-# #ifdef __OBJC__
-# #import <CoreData/CoreData.h>
-# #endif /* __OBJC__*/
-# EOS
+  # Add Core Data to the PCH if RestKit/CoreData has been imported
+  s.prefix_header_contents = <<-EOS
+#import <Availability.h>
+
+#define _AFNETWORKING_PIN_SSL_CERTIFICATES_
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+  #import <SystemConfiguration/SystemConfiguration.h>
+  #import <MobileCoreServices/MobileCoreServices.h>
+  #import <Security/Security.h>
+#else
+  #import <SystemConfiguration/SystemConfiguration.h>
+  #import <CoreServices/CoreServices.h>
+  #import <Security/Security.h>
+#endif
+
+#ifdef COCOAPODS_POD_AVAILABLE_RestKit_CoreData
+    #import <CoreData/CoreData.h>
+#endif
+EOS
 end

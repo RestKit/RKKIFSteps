@@ -18,11 +18,8 @@
 //  limitations under the License.
 //
 
-#import <SystemConfiguration/SystemConfiguration.h>
-#import <MobileCoreServices/MobileCoreServices.h>
 #import "KIFTestStep.h"
 #import <RestKit/RestKit.h>
-#import <RestKit/CoreData.h>
 
 /**
  The `RestKit` category provides a number of steps to aid in testing RestKit based applications using the KIF integration testing library.
@@ -128,6 +125,7 @@
 /// @name Interacting with Core Data
 ///---------------------------------
 
+#ifdef _COREDATADEFINES_H
 /**
  Creates and returns a KIF test step that will insert a new `NSManagedObject` instance for the entity with the given name into `[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext`, optionally yielding it to a block for further configuration and saving it to the persistent store.
  
@@ -152,6 +150,8 @@
  @param block A block to be executed within the managed object context. It accepts two arguments: the managed object context itself and a pointer to a Boolean value that determines if the subsequent save of the managed object context will be back to the persistent store. The block can be `nil` if you only wish to trigger a save. The default value of `saveToPersistentStore` is `NO`.
  */
 + (instancetype)stepToPerformBlockAndSaveMainQueueManagedObjectContextOfRestKitDefaultManagedObjectStore:(void(^)(NSManagedObjectContext *managedObjectContext, BOOL *saveToPersistentStore))block;
+
+#endif
 
 @end
 

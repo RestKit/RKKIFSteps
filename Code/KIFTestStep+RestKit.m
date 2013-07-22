@@ -24,6 +24,7 @@
 #import "RKTestFactory.h"
 #import "RKTestHelpers.h"
 #import "RKTestFixture.h"
+#import "RKLog.h"
 
 NSString *RKStringDescribingRequestMethod(RKRequestMethod method);
 
@@ -122,7 +123,7 @@ NSString *RKStringDescribingRequestMethod(RKRequestMethod method);
             if (configurationBlock) configurationBlock(object);
             success = [managedObjectContext save:error];
             if (! success) {
-                RKLogCoreDataError(*error);
+                RKLogError(@"An error occurred while creating the object from the factory: %@", *error);
             }
         }];
         KIFTestCondition(success, error, @"Failed to save managed object context: %@", [*error localizedDescription]);
@@ -142,6 +143,7 @@ NSString *RKStringDescribingRequestMethod(RKRequestMethod method);
 
 #pragma mark Interacting with Core Data
 
+#ifdef _COREDATADEFINES_H
 + (instancetype)stepToInsertManagedObjectInRestKitDefaultManagedObjectStoreWithEntityName:(NSString *)entityName savedToPersistentStore:(BOOL)persisted configurationBlock:(void (^)(id managedObject))configurationBlock
 {
     NSString *description = [NSString stringWithFormat:@"Insert a Managed Object for Entity '%@' into `[RKManagedObjectStore defaultStore]`%@", entityName, (persisted ? @" and save it to the persistent store" : @"")];
@@ -198,6 +200,7 @@ NSString *RKStringDescribingRequestMethod(RKRequestMethod method);
         return success ? KIFTestStepResultSuccess : KIFTestStepResultFailure;
     }];
 }
+#endif
 
 @end
 
