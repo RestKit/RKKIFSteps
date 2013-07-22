@@ -132,7 +132,7 @@ RKKIFSteps is designed to be used in KIF environment in which test scenarios are
 {
     return [KIFTestStep stepWithDescription:@"Tear Down the Test Environment" executionBlock:^(KIFTestStep *step, NSError **error) {
         NSDictionary *envVars = [[NSProcessInfo processInfo] environment];
-        if ([envVars[@"KIF_SKIP_TEAR_DOWN"] isNotBlank]) return KIFTestStepResultSuccess;
+        if ([envVars[@"KIF_SKIP_TEAR_DOWN"] length] > 0) return KIFTestStepResultSuccess;
 
         NSException *caughtException = nil;
         @try {
