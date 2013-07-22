@@ -97,7 +97,7 @@
  
  @param path A relative path for constructing the destination URL.
  @param method A single, specific request method for requests to the URL that should load the cached response (i.e. `RKRequestMethodGET`).
- @param responseData The data to be stored as the body of the cached response.
+ @param fixturePath A path to a response fixture stored within the designated fixture bundle that is to be used when populating the cached response.
  @return A KIF test step that caches the specified response.
  */
 + (instancetype)stepToCacheResponseForURLRelativeToRestKitSharedObjectManagerWithPath:(NSString *)path method:(RKRequestMethod)method responseDataFromContentsOfFixtureAtPath:(NSString *)fixturePath;
