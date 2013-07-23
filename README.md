@@ -27,7 +27,7 @@ By far the most important feature of RKKIFSteps is the support for stubbing netw
 
 For example, consider the following table of possible changes for a theoretical view controller in an app that performs a `POST` request that creates a new `Review` object for a `Restaurant` entity with the ID of 12345:
 
-| Original Path Pattern      | New Pattern | HTTP Status Code            | Response Body  |
+| Original Path Pattern      | New Pattern | HTTP Status Code            | Response Body                                                |
 | ---------------------------|-------------|-----------------------------|--------------------------------------------------------------|
 | /restaurants/12345/reviews | /review     | 201 (Created)               | { "id": 1, "title": "Whatever"}                              |
 | /restaurants/12345/reviews | /422        | 422 (Unprocessable Entity)  | { "errors": { "code": 12345, "message": "Invalid object." }} |
