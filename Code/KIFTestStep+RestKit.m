@@ -117,17 +117,7 @@ NSString *RKStringDescribingRequestMethod(RKRequestMethod method);
     return [KIFTestStep stepWithDescription:description executionBlock:^(KIFTestStep *step, NSError *__autoreleasing *error) {
         id object = [RKTestFactory objectFromFactory:name properties:properties];
         KIFTestCondition(object != nil, error, @"Factory returned nil object");
-        NSManagedObjectContext *managedObjectContext = [[RKTestFactory managedObjectStore] persistentStoreManagedObjectContext];
-        __block BOOL success;
-        [managedObjectContext performBlockAndWait:^{
-            if (configurationBlock) configurationBlock(object);
-            success = [managedObjectContext save:error];
-            if (! success) {
-                RKLogError(@"An error occurred while creating the object from the factory: %@", *error);
-            }
-        }];
-        KIFTestCondition(success, error, @"Failed to save managed object context: %@", [*error localizedDescription]);
-        
+        if (configurationBlock) configurationBlock(object);
         return KIFTestStepResultSuccess;
     }];
 }
